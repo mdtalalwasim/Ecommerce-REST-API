@@ -11,7 +11,13 @@ public class ProductViewController {
 	@GetMapping("/all-products")
 	public String showProductPage() {
 		
-		return "/product/all-product-home";
+		return "/admin/product/all-product-home";
+	}
+	
+	@GetMapping("/add-product")
+	public String addProductPage() {
+		
+		return "/admin/product/add-product";
 	}
 	
 	
