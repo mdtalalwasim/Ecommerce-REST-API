@@ -6,13 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
-public class ProductViewController {
-
-	@GetMapping("/all-products")
-	public String showProductPage() {
-		
-		return "/product/all-product-home";
+public class WelcomeViewController {
+	
+	@GetMapping("/welcome")
+	public String IndexPage() {
+		return "index";
 	}
-	
-	
+
 }
