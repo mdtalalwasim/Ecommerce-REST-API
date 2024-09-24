@@ -20,5 +20,11 @@ public class ProductViewController {
 		return "/admin/product/add-product";
 	}
 	
+	@GetMapping("/product-details")
+	public String viewProductDetails() {
+		
+		return "/admin/product/product-view";
+	}
+	
 	
 }
