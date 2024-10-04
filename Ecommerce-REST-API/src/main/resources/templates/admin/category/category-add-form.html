@@ -14,8 +14,8 @@
 	<section>
 		<div class="container-fluid p-5">
 			<div class="row">
-				
-				<div class="col-md-4 offset-md-4" >
+
+				<div class="col-md-4 offset-md-4">
 					<div class="card custom-card-shadow">
 						<div class="card-header text-center">
 							<p class="fs-4">Add Category</p>
@@ -31,7 +31,8 @@
 						</div>
 
 						<div class="card-body">
-							<form action="/admin/save-category" method="post" enctype="multipart/form-data">
+							<form id="categoryFormId" method="post"
+								enctype="multipart/form-data">
 								<div class="mb-3">
 									<label>Category Name</label> <input type="text"
 										name="categoryName" class="form-control">
@@ -40,50 +41,121 @@
 								<div class="mb-3">
 									<label>Status</label>
 									<div class="form-check">
-										<input class="form-check-input" type="radio"
-											name="isActive" id="active" value="true" checked> <label
-											class="form-check-label" for="active">
-											Active</label>
+										<input class="form-check-input" type="radio" name="isActive"
+											id="active" value="true" checked> <label
+											class="form-check-label" for="active"> Active</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="radio"
-											name="isActive" id="inactive" value="false" >
-										<label class="form-check-label" for="inactive">
-											Inactive</label>
+										<input class="form-check-input" type="radio" name="isActive"
+											id="inactive" value="false"> <label
+											class="form-check-label" for="inactive"> Inactive</label>
 									</div>
 								</div>
 
 
 
 								<div class="mb-3 col">
-									<label>Upload Image</label> <input type="file"
-										name="file" class="form-control">
+									<label>Upload Image</label> <input type="file" name="file"
+										class="form-control">
 								</div>
 
-								<button class="btn btn-danger col-md-12">ADD</button>
+								<button type="button" class="btn btn-danger col-md-12" id="submitBtnCategoryForm">ADD</button>
 							</form>
 						</div>
 					</div>
 				</div>
 
-				
+
 			</div>
 		</div>
 
-		<script>
+		
+		
+		<!-- <script>
 		 $(document).ready(function() {
+				alert('doc ready ');
 		        $('#categoryTable').DataTable();
 		    });
 			
+		</script> -->
+
+
+		<!-- Include external JavaScript file for category form submission -->
+		<script src="/js/category.js"></script>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			var baseurl = /*[[${baseurl}]]*/;
+			setBaseUrl(baseurl);
+			
+			
+			$(document).ready(function() {
+				//alert('doc ready ');
+		        $('#categoryTable').DataTable();
+		    });
+			
+			
+			
+			$(document).ready(function(){
+				$('#submitBtnCategoryForm').on('click', function(e){
+					e.preventDefault();//prevent the default form submission
+					
+					// Create a FormData object
+					var form = $('#categoryFormId')[0];
+					var formData = new FormData(form);
+					//var w = baseurl + "/api/save-category";
+					
+					// Make AJAX request
+					$.ajax({
+						type: "POST",
+						enctype : 'multipart/form-data',
+	                    url: baseurl + "/api/save-category", 
+	                    data: formData,
+	                    contentType: false, // Important for FormData
+	                    processData: false, // Important for FormData
+	                    success: function (response) {
+							console.log("Response :"+response);
+							swal("Category added successfully!");
+							/* if (response.statusCode === 200) {
+	                            swal("Category added successfully!");
+	                            // Optionally, you can redirect or clear the form here
+	                            $('#categoryFormId')[0].reset();
+	                        } else {
+	                            swal("Error!", response.message, "error");
+	                        } */
+							
+	                        // redirect after 2sec
+	                        setTimeout(function() {
+								window.location.href =  baseurl +'/admin/category';
+							}, 2000);
+	                    },
+	                    error: function (e) {
+	                        swal("Error!", "An error occurred. Please try again.", "error");
+	                        console.log("ERROR: ", e);
+	                    }
+					
+					});
+					
+				});	
+			
+			
+			});
+
+			/*]]>*/
 		</script>
+
+		
+		<!-- SweetAlert for user notifications -->
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 	</section>
 
-
-
-
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+	<!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"
 		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous"></script> -->
+
+
+
+
 </body>
 </html>
