@@ -5,11 +5,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +25,10 @@ import com.mdtalalwasim.ecommercerest.service.CategoryService;
 @RestController
 @RequestMapping("/api")
 public class CategoryRestController {
+	
+
+//	@Value("${base.url}")
+//    private String baseurl;
 	
 	@Autowired
 	CategoryService categoryService;
@@ -60,6 +67,29 @@ public class CategoryRestController {
 		}
 		
 		
+	}
+	
+	@GetMapping("/get-all-category-list")
+//	ResponseEntity<?> getAllCategories(){
+//		try {
+//			List<Category> allCategoryList = categoryService.getAllCategory();
+//			return ResponseEntity.status(HttpStatus.OK).body(allCategoryList);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error Fetching the list of category: ");
+//		
+//	}
+	List<Category> getAllListOfCategory(){
+		try {
+			List<Category> allCategoryList = categoryService.getAllCategory();
+			
+			return allCategoryList;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 }

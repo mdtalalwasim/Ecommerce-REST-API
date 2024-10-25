@@ -16,7 +16,7 @@ public class CategoryViewController {
 	@GetMapping("/category")
 	public String addProductPage(Model model) {
 		model.addAttribute("baseurl", baseurl);
-		
+		System.out.println(baseurl);
 		return "/admin/category/category-home";
 	}
 	
